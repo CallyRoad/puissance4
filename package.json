@@ -1,0 +1,20 @@
+{
+  "name": "puissance_4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CallyRoad/puissance4.git"
+  },
+  "author": "Coralie Venuat (alias CallyRoad)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CallyRoad/puissance4/issues"
+  },
+  "type" : "module",
+  "homepage": "https://github.com/CallyRoad/puissance4#readme"
+}

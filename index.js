@@ -8,14 +8,10 @@ const lines = 6;
 const grid = [];
 /////Grid creation/////
 for (let i = 0; i < lines; i++) {
-  grid.push(new Array(columns).fill(" tab "));
+  grid.push(new Array(columns).fill("  "));
 }
-console.log("grille de jeu ---------------", grid);
-console.log("-------------------------");
-console.log(grid.length);
-console.log("-------------------------");
 
-//-Show grid
+//-Fonction pour afficher la grille
 function showGrid() {
   for (let i = 0; i < lines; i++) {
     console.log(grid[i].join("|"));
@@ -23,22 +19,19 @@ function showGrid() {
   }
 }
 
-//-Place pawn
+//-Fonction pour placer un pion dans une colonne choisie
 function placePawn(column, player) {
   for (let line = lines - 1; line >= 0; line--) {
-    console.log("ligne : " + line);
-    //Verify if the box is empty
+    //Vérifie si la case est vide
     if (grid[line][column] === "  ") {
       grid[line][column] = player;
       return true;
     }
   }
+  console.log("Cette colonne est déjà remplie, essaie une autre !");
   return false;
 }
-//placePawn();
-//Function pour créer le jeu lui même
-
-//Vérifier si un joueur à gagné
+//Fonction pour vérifier si un joueur a gagné
 function verifyVictory(player) {
   //--On veut vérifier les lignes
   for (let line = 0; line < lines; line++) {
@@ -68,40 +61,65 @@ function verifyVictory(player) {
   }
   return false;
   //--On veut vérifier les diagonales
+
 }
 
 function puissance4() {
+  console.log("-----------------------------------------");
   console.log("Bienvenue sur le jeu du puissance 4 !");
-  let round = 1;
-  let currentPlayer = "X";
-  //
-  while (true) {
-    showGrid();
-    console.log(`Tour : ${round}`);
-    const choice = rl.question("Choisissez une colonne (0-6) : ");
-    const column = parseInt(choice);
+  console.log("-----------------------------------------");
 
-    //Verifie si le nombre est compris entre 0 et 6 qui correspondent au sept colonnes du jeu, et s'il s'agit bien d'un nombre
-    if (!isNaN(column) || (column < 0 && column >= columns)) {
-      console.log("Entre un nombre uniquement, compris entre 0 et 6 compris");
-    } else {
-      if (placePawn(column, currentPlayer)) {
-        if (verifyVictory(currentPlayer)) {
-          console.log(`Le joueur ${currentPlayer} a gagné`);
-          showGrid();
-          rl.close();
-          return;
-        }
-        //Rajoute un tour
-        round++;
-        //Changement du joueur
-        if (currentPlayer === "X") {
-          currentPlayer = "O";
+  let round = 1;
+  let currentPlayer = " X ";
+
+  //Fonction qui lance la partie
+  const gameRound = () => {
+    console.log(`Tour : ${round}`);
+    showGrid();
+
+    rl.question(
+      `C'est au tour du joueur ${currentPlayer}. Choisissez une colonne (0-6) : `,
+      (column) => {
+        column = parseInt(column);
+        if (column >= 0 && column < columns) {
+          if (placePawn(column, currentPlayer)) {
+            if (verifyVictory(currentPlayer)) {
+              console.log("                             ");
+              console.log("///////////////////////////");
+              console.log(`Le joueur ${currentPlayer} a gagné`);
+              console.log("///////////////////////////");
+              console.log("                             ");
+
+              showGrid();
+              console.log("                             ");
+              console.log("Félicitation ! ");
+              rl.close();
+              return;
+            }
+            //Rajoute un tour
+            round++;
+            //Changement du joueur
+            if (currentPlayer === " X ") {
+              currentPlayer = " O ";
+            } else {
+              currentPlayer = " X ";
+            }
+            //Rappel la fonction gameRound() pour pouvoir faire le tour suivant
+            gameRound();
+          } else {
+            gameRound();
+          }
         } else {
-          currentPlayer = "X";
+          console.log("                             ");
+          console.log(
+            "---- Entre seulement un chiffre , compris entre 0 et 6 ----"
+          );
+          console.log("                             ");
+          gameRound();
         }
       }
-    }
-  }
+    );
+  };
+  gameRound();
 }
 puissance4();

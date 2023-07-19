@@ -10,10 +10,10 @@ const grid = [];
 for (let i = 0; i < lines; i++) {
   grid.push(new Array(columns).fill(" tab "));
 }
-console.log("grille de jeu ---------------",grid)
-console.log('-------------------------');
+console.log("grille de jeu ---------------", grid);
+console.log("-------------------------");
 console.log(grid.length);
-console.log('-------------------------');
+console.log("-------------------------");
 
 //-Show grid
 function showGrid() {
@@ -81,12 +81,25 @@ function puissance4() {
     const column = parseInt(choice);
 
     //Verifie si le nombre est compris entre 0 et 6 qui correspondent au sept colonnes du jeu, et s'il s'agit bien d'un nombre
-    if (!isNaN(column) || column < 0 && column >= columns) {
+    if (!isNaN(column) || (column < 0 && column >= columns)) {
       console.log("Entre un nombre uniquement, compris entre 0 et 6 compris");
     } else {
-      placePawn(column, currentPlayer);
-      verifyVictory(currentPlayer);
-
+      if (placePawn(column, currentPlayer)) {
+        if (verifyVictory(currentPlayer)) {
+          console.log(`Le joueur ${currentPlayer} a gagné`);
+          showGrid();
+          rl.close();
+          return;
+        }
+        //Rajoute un tour
+        round++;
+        //Changement du joueur
+        if (currentPlayer === "X") {
+          currentPlayer = "O";
+        } else {
+          currentPlayer = "X";
+        }
+      }
     }
   }
 }

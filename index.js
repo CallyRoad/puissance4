@@ -66,6 +66,7 @@ function verifyVictory(player) {
       }
     }
   }
+  return false;
   //--On veut vérifier les diagonales
 }
 

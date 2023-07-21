@@ -90,6 +90,20 @@ function verifyVictory(player) {
   }
   return false;
 }
+
+function verifyDraw () {
+  //--Will verify if each box is empty, if empty => isn't a draw
+  for (let line = 0; line < lines; line++) {
+    for (let column = 0; column < columns; column++) {
+      if (
+        grid[line][column] === "  "
+      ) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 //--Starts the game
 function puissance4() {
   console.log("");
@@ -124,6 +138,12 @@ function puissance4() {
               console.log(`Félicitation ! Le jeu c'est terminé en ${round} tours ! `);
               rl.close();
               return;
+            } else if (verifyDraw()) {
+              console.log("");
+              console.log("///////////////////////////");
+              console.log(`Égalité ! `);
+              console.log("///////////////////////////");
+              console.log("");
             }
             //Add round
             round++;

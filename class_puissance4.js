@@ -24,8 +24,7 @@ class Puissance4 {
       console.log(this.grid[i].join("|"));
       console.log("-".repeat(this.columns * 3 - 1));
     }
-    console.log(" 0  1  2  3  4  5  6");
-    console.log("");
+    console.log(" 0  1  2  3  4  5  6\n");
   }
 
   placeSpawn(column, player) {
@@ -55,7 +54,6 @@ class Puissance4 {
         }
       }
     }
-
     //--Check columns
     for (let column = 0; column < this.columns; column++) {
       for (let line = 0; line < this.lines - 3; line++) {
